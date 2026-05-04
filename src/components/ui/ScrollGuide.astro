@@ -1,0 +1,39 @@
+---
+const { class: className, ...rest } = Astro.props;
+---
+
+<div
+  class:list={[
+    "flex flex-col items-center gap-4 fixed left-2 md:left-4 bottom-1/2 translate-y-1/2",
+    className,
+  ]}
+  {...rest}
+>
+  <span
+    class="text-xs tracking-[0.3em] text-white/80 uppercase font-light [writing-mode:vertical-lr]"
+  >
+    Scroll
+  </span>
+
+  <div class="relative h-36 w-px overflow-hidden bg-white/30">
+    <div class="scroll-line absolute top-0 h-full w-full bg-white"></div>
+  </div>
+</div>
+
+<style>
+  .scroll-line {
+    animation: scroll-move 5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  @keyframes scroll-move {
+    0% {
+      transform: translateY(-100%);
+    }
+    50% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+</style>

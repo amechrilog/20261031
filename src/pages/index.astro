@@ -1,11 +1,51 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Hero from "../components/ui/Hero.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import HamburgerNav from "../components/ui/HamburgerNav.astro";
+import ScrollGuide from "../components/ui/ScrollGuide.astro";
+import UpperButton from "../components/ui/UpperButton.astro";
+import Layout from "../layouts/Layout.astro";
+import Section from "../components/Section.astro";
+import Contact from "../components/contact.astro";
+import { getCollection, render } from "astro:content";
+
+// 2. コレクションを取得
+const allSections = await getCollection("sections");
+
+// 3. 並び替え（この時点で型が合っていれば a, b のエラーは消えます）
+const sortedSections = allSections.sort((a, b) => a.data.order - b.data.order);
+
+// 4. 【重要】上部で全てのセクションをレンダリング済みの状態にする
+const sectionsWithContent = await Promise.all(
+  sortedSections.map(async (item) => {
+    const { Content } = await render(item); // v5の書き方
+    return { item, Content };
+  }),
+);
 ---
 
 <Layout>
-	<Welcome />
+  <Hero />
+  <HamburgerNav />
+  <div class="p-8 mx-auto md:max-w-7xl md:p-40">
+    {
+      sectionsWithContent.map(({ item, Content }) => (
+        <Section
+          id={item.data.id || item.id}
+          title={item.data.title}
+          class:list={[
+            item.data.align === "left" ? "mr-auto" : "ml-auto",
+          ]}
+        >
+          <Content /> {/* ここで中身が表示されます */}
+        </Section>
+      ))
+    }
+
+    <Contact
+      class="mb-40 md:w-11/12 md:max-w-fit px-10 md:px-20 py-10 md:py-20 leading-7 bg-white/30 border border-white/50 rounded-xl mr-auto"
+    />
+    <ScrollGuide />
+    <UpperButton />
+  </div>
 </Layout>

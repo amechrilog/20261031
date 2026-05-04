@@ -1,0 +1,43 @@
+<a
+  href="https://picrea.jp/event/56771e02f31517e53c2cdea85bde3ad1d9e5df5297f24f34455d684d8646fb73"
+  target="_blank"
+  class="groub border border-white/50 rounded-2xl max-w-max p-8 flex content-center text-white hero-anime liquid absolute bottom-4 right-4 opacity-0"
+>
+  <span class="self-center pr-4 md:pr-8">
+    <span class="text-sm">サークル参加<br /></span>
+    <span
+      ><span class="text-3xl">10/16</span><span class="text-xs">まで</span
+      ></span
+    >
+  </span>
+
+  <span
+    class="flex flex-col items-center border-l-1 border-l-white pl-2 md:pl-4"
+  >
+    <span class="text-xs md:text-sm">サークル<br />参加申込</span>
+    <span class="text-4xl">→</span>
+  </span>
+</a>
+
+<style>
+  /*リキッドグラス*/
+
+  .liquid {
+    isolation: isolate;
+    box-shadow: 0px 0px 21px -8px rgba(255, 255, 255, 0.3);
+  }
+
+  .liquid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 1rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    filter: url(#glass-distortion);
+    -webkit-filter: url(#glass-distortion);
+    isolation: isolate;
+    pointer-events: none;
+  }
+</style>

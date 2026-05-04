@@ -1,0 +1,35 @@
+---
+const { class: className, ...rest } = Astro.props;
+---
+
+<a
+  href="https://picrea.jp/event/56771e02f31517e53c2cdea85bde3ad1d9e5df5297f24f34455d684d8646fb73"
+  target="_blank"
+  class:list={["block max-w-max mx-auto my-8 group relative overflow-hidden overflow-x-hidden rounded-2xl bg-blue text-white",className]}{...rest}
+>
+  <span class="relative flex content-center p-8 z-20">
+    <span class="self-center pr-4 md:pr-8">
+      <span class="text-sm">
+        サークル参加
+        <br />
+      </span>
+      <span>
+        <span class="text-3xl">10/16</span>
+        <span class="text-xs">まで</span>
+      </span>
+    </span>
+
+    <span class="flex flex-col items-center border-l-1 border-l-white pl-2 md:pl-4">
+      <span class="text-xs md:text-sm">
+        サークル
+        <br />
+        参加申込
+      </span>
+      <span class="text-4xl">→</span>
+    </span>
+  </span>
+
+  <span class="absolute inset-0 overflow-hidden rounded-md">
+    <span class="absolute left-0 aspect-square w-full origin-center -translate-x-full rounded-full bg-black transition-all duration-500 group-hover:-translate-x-0 group-hover:scale-150 group-hover:drop-shadow-md"></span>
+  </span>
+</a>

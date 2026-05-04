@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700&family=Zen+Old+Mincho:wght@400;700&display=swap");
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --color-black: #4d4d4d;
+  --color-blue-gray: #6880a0;
+  --color-blue: #00c4df;
+  --color-green: #3f7735;
+  --color-red: #860b0d;
+
+  --font-sans:
+    "Zen Kaku Gothic New", Avenir, "Helvetica Neue", Arial,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --font-serif:
+    "Zen Old Mincho", "Times New Roman", "YuMincho", "Hiragino Mincho ProN",
+    "Yu Mincho", "MS PMincho", serif;
+}
+
+html {
+  scrollbar-gutter: stable;
+}

@@ -1,0 +1,206 @@
+---
+import Button from "./button.astro";
+---
+
+<div class="fixed top-0 right-0 z-50 p-2 md:p-6">
+  <button
+    id="menu-toggle"
+    class="menu-button"
+    aria-expanded="false"
+    aria-controls="main-nav"
+    aria-label="メニューを開閉する"
+  >
+    <!-- 開くとき用の画像 -->
+    <img
+      src="/src/assets/menu.svg"
+      alt=""
+      class="icon-open w-12 h-12 md:w-14 md:h-14 transition-all duration-500 hover:drop-shadow-md"
+    />
+
+    <!-- 閉じるとき用のspanタグ -->
+    <span class="icon-close">×</span>
+  </button>
+
+  <nav id="main-nav" class="nav-overlay">
+    <ul
+      class="flex flex-col items-center justify-center h-full gap-8 text-2xl text-white font-heading"
+    >
+      <li>
+        <a
+          href="#about"
+          class="transition-all duration-300 group-hover:opacity-50 hover:!opacity-100"
+          >イベントについて</a
+        >
+      </li>
+      <li>
+        <a
+          href="#join"
+          class="transition-all duration-300 group-hover:opacity-50 hover:!opacity-100"
+          >参加要項</a
+        >
+      </li>
+      <li>
+        <a
+          href="#circle"
+          class="transition-all duration-300 group-hover:opacity-50 hover:!opacity-100"
+          >サークル参加</a
+        >
+      </li>
+      <li>
+        <a
+          href="#event"
+          class="transition-all duration-300 group-hover:opacity-50 hover:!opacity-100"
+          >連動企画</a
+        >
+      </li>
+      <li>
+        <a
+          href="#tmp"
+          class="transition-all duration-300 group-hover:opacity-50 hover:!opacity-100"
+          >素材配布</a
+        >
+      </li>
+      <li>
+        <a
+          href="#contact"
+          class="transition-all duration-300 group-hover:opacity-50 hover:!opacity-100"
+          >お問合せ</a>
+      </li>
+      <li>
+        <a href=""><img src="src/assets/logo.svg" class="w-4" /></a>
+      </li>
+      <Button />
+    </ul>
+  </nav>
+</div>
+
+<style lang="scss">
+  $accent-color: #b89a24; // コンパスの色に合わせたゴールド系
+
+  .menu-button {
+    position: relative;
+    z-index: 100;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; // 最初は隠しておく
+    visibility: hidden; // クリックもできないようにしておく
+    pointer-events: none;
+
+    // 初期状態：画像を表示、spanを非表示
+    .icon-open {
+      display: block;
+    }
+    .icon-close {
+      display: none;
+      font-size: 4rem;
+      color: white;
+      line-height: 1;
+    }
+
+    // メニューが開いた（aria-expanded="true"）時の切り替え
+    &[aria-expanded="true"] {
+      .icon-open {
+        display: none;
+      }
+      .icon-close {
+        display: block;
+      }
+    }
+  }
+
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 25, 47, 0.85); // 没入感のある濃紺
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+
+    // アニメーション設定
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+
+    &.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  .nav-list {
+    text-align: center;
+    list-style: none;
+
+    .nav-item {
+      margin: 2rem 0;
+      font-size: 1.5rem;
+      letter-spacing: 0.2em;
+
+      a {
+        color: white;
+        text-decoration: none;
+        transition: color 0.3s;
+
+        &:hover {
+          color: $accent-color;
+        }
+      }
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // DOMが完全に読み込まれてから実行
+  window.addEventListener("load", () => {
+    const menuBtn = document.querySelector(".menu-button");
+    const heroSection = document.querySelector("#hero");
+
+    if (menuBtn && heroSection) {
+      gsap.to(menuBtn, {
+        opacity: 1,
+        y: 5,
+        visibility: "visible",
+        pointerEvents: "auto",
+        duration: 0.3,
+        scrollTrigger: {
+          trigger: heroSection,
+          start: "bottom top",
+          end: "max",
+          toggleActions: "play none none reverse",
+        },
+      });
+    }
+  });
+
+  const toggle = document.getElementById("menu-toggle");
+  const nav = document.getElementById("main-nav");
+
+  function toggleMenu() {
+    const isExpanded = toggle?.getAttribute("aria-expanded") === "true";
+    toggle?.setAttribute("aria-expanded", (!isExpanded).toString());
+    nav?.classList.toggle("is-open");
+
+    // 背面のスクロールを禁止
+    document.body.style.overflow = isExpanded ? "" : "hidden";
+  }
+
+  toggle?.addEventListener("click", toggleMenu);
+
+  // リンクをクリックしたら閉じる（アンカーリンク用）
+  nav?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (nav?.classList.contains("is-open")) toggleMenu();
+    });
+  });
+</script>

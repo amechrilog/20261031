@@ -1,0 +1,46 @@
+---
+import LiquidButton from "./LiquidButton.astro";
+import HeaderMenu from "./HeaderMenu.astro";
+---
+
+<!-- TODO:スマホ版とPC版で画像自体分ける -->
+<header id="hero" class="relative min-h-[50vh] aspect-[9/16] md:aspect-video">
+  <div
+    class="absolute bg-[url('../assets/banner_sp.png')] bg-no-repeat bg-cover bg-center w-full h-auto aspect-[9/16] md:bg-[url('../assets/banner.png')] md:aspect-video"
+  >
+  </div>
+  <HeaderMenu />
+  <h1 class="hero-anime opacity-0">
+    <img
+      class="hero-anime absolute w-1/2 top-4 left-1/2 translate-x-[-50%] md:w-1/3 md:top-10 md:left-10 md:translate-x-0"
+      src="src/assets/logo.png"
+      alt="雨クリWebオンリー 星間航海記録"
+    />
+  </h1>
+  <div class="hero-anime opacity-0">
+    <img
+      class="absolute w-2/3 left-1/2 translate-x-[-50%] bottom-40 md:w-auto md:left-10 md:translate-x-0"
+      src="src/assets/date.png"
+      alt="inピクリエ 2026年10月31日"
+    />
+  </div>
+  <LiquidButton />
+</header>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // DOMが完全に読み込まれてから実行
+  window.addEventListener("load", () => {
+    const heroAnime = document.querySelector(".hero-anime");
+    gsap.to(".hero-anime", {
+      opacity: 1,
+      duration: 0.3,
+      ease:"ease-out",
+      stagger: 0.3,
+    });
+  });
+</script>

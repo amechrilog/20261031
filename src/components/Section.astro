@@ -1,0 +1,16 @@
+---
+const { class: className, ...rest } = Astro.props;
+// Props（外部から渡されるデータ）の定義
+const { id, title } = Astro.props;
+---
+
+<section
+  class:list={[
+    "mb-20 md:mb-40 md:w-11/12 md:max-w-fit px-10 md:px-20 py-10 md:py-20 leading-7 bg-white/30 border border-white/50 backdrop-blur rounded-xl prose-h3:text-xl prose-h3:mt-14 md:prose-h3:mt-20 prose-h3:mb-4 prose-h3:font-serif md:prose-h3:tracking-[0.1em] prose-li:list-disc prose-li:list-inside prose-a:break-words prose-a:hover:text-blue",
+    className,
+  ]}
+  {...rest}
+>
+  <h2 class="mb-8 text-3xl font-serif md:tracking-[0.1em]">{title}</h2>
+  <slot />
+</section>
