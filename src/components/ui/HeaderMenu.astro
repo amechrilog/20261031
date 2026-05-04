@@ -1,5 +1,7 @@
 ---
 import Button from "./button.astro";
+import { Image } from "astro:assets";
+import XImage from "../../assets/logo.svg";
 ---
 
 <nav class="group hidden md:relative md:block py-4">
@@ -50,7 +52,8 @@ import Button from "./button.astro";
       <a
         href=""
         class="transition-all duration-300 group-hover:opacity-50 hover:!opacity-100"
-        ><img src="src/assets/logo.svg" class="w-4" /></a
+        >
+        <Image src={XImage} class="w-4" alt="X"/></a
       >
     </li>
   </ul>

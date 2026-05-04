@@ -1,5 +1,7 @@
 ---
 import Button from "./button.astro";
+import { Image } from "astro:assets";
+import HamburgerImage from "../../assets/menu.svg";
 ---
 
 <div class="fixed top-0 right-0 z-50 p-2 md:p-6">
@@ -11,8 +13,8 @@ import Button from "./button.astro";
     aria-label="メニューを開閉する"
   >
     <!-- 開くとき用の画像 -->
-    <img
-      src="/src/assets/menu.svg"
+    <Image
+      src={HamburgerImage}
       alt=""
       class="icon-open w-12 h-12 md:w-14 md:h-14 transition-all duration-500 hover:drop-shadow-md"
     />
@@ -64,7 +66,8 @@ import Button from "./button.astro";
         <a
           href="#contact"
           class="transition-all duration-300 group-hover:opacity-50 hover:!opacity-100"
-          >お問合せ</a>
+          >お問合せ</a
+        >
       </li>
       <li>
         <a href=""><img src="src/assets/logo.svg" class="w-4" /></a>
