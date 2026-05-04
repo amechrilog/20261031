@@ -2,6 +2,7 @@
 import Button from "./button.astro";
 import { Image } from "astro:assets";
 import HamburgerImage from "../../assets/menu.svg";
+import XImage from "../../assets/logo.svg";
 ---
 
 <div class="fixed top-0 right-0 z-50 p-2 md:p-6">
@@ -71,7 +72,7 @@ import HamburgerImage from "../../assets/menu.svg";
       </li>
       <li>
         <a href="https://x.com/amechrilog"
-          ><img src="src/assets/logo.svg" class="w-4" /></a
+          ><Image src={XImage} class="w-4" alt="X"/></a
         >
       </li>
       <Button />
