@@ -5,10 +5,13 @@ import HamburgerImage from "../../assets/menu.svg";
 import XImage from "../../assets/logo.svg";
 ---
 
-<div class="fixed top-0 right-0 z-50 p-2 md:p-6">
+<div
+  id="menu-container"
+  class="fixed top-0 right-0 z-50 p-2 md:p-6 md:pointer-events-none"
+>
   <button
     id="menu-toggle"
-    class="menu-button"
+    class="menu-button pointer-events-auto"
     aria-expanded="false"
     aria-controls="main-nav"
     aria-label="メニューを開閉する"
@@ -17,7 +20,7 @@ import XImage from "../../assets/logo.svg";
     <Image
       src={HamburgerImage}
       alt=""
-      class="icon-open w-12 h-12 md:w-14 md:h-14 transition-all duration-500 hover:drop-shadow-md"
+      class="icon-open w-12 h-12 md:w-14 md:h-14 transition-all duration-500 drop-shadow-md"
     />
 
     <!-- 閉じるとき用のspanタグ -->
@@ -71,8 +74,8 @@ import XImage from "../../assets/logo.svg";
         >
       </li>
       <li>
-        <a href="https://x.com/amechrilog"
-          ><Image src={XImage} class="w-4" alt="X"/></a
+        <a href="https://x.com/amechrilog" target="_blank"
+          ><Image src={XImage} class="w-4" alt="X" /></a
         >
       </li>
       <Button />
@@ -92,9 +95,16 @@ import XImage from "../../assets/logo.svg";
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0; // 最初は隠しておく
-    visibility: hidden; // クリックもできないようにしておく
-    pointer-events: none;
+    opacity: 0;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(2.5rem);
+
+    @media (min-width: 768px) {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
 
     // 初期状態：画像を表示、spanを非表示
     .icon-open {
@@ -127,6 +137,7 @@ import XImage from "../../assets/logo.svg";
     align-items: center;
     justify-content: center;
     z-index: 90;
+    pointer-events: none;
 
     // アニメーション設定
     opacity: 0;
@@ -136,6 +147,7 @@ import XImage from "../../assets/logo.svg";
     &.is-open {
       opacity: 1;
       visibility: visible;
+      pointer-events: auto;
     }
   }
 
@@ -172,13 +184,17 @@ import XImage from "../../assets/logo.svg";
     const menuBtn = document.querySelector(".menu-button");
     const heroSection = document.querySelector("#hero");
 
-    if (menuBtn && heroSection) {
+    if (!menuBtn || !heroSection) return;
+    let mm = gsap.matchMedia();
+
+    mm.add("(min-width:768px", () => {
       gsap.to(menuBtn, {
         opacity: 1,
-        y: 5,
+        y: 0,
         visibility: "visible",
         pointerEvents: "auto",
-        duration: 0.3,
+        duration: 0.5,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: heroSection,
           start: "bottom top",
@@ -186,16 +202,35 @@ import XImage from "../../assets/logo.svg";
           toggleActions: "play none none reverse",
         },
       });
-    }
+    });
+    mm.add("(max-width: 767px)", () => {
+      // スマホでは常に表示するので、アニメーションなしにするか、
+      // ページ読み込み時にふわっと出すだけの演出などを入れる
+      gsap.set(menuBtn, {
+        opacity: 1,
+        duration: 0.3,
+      });
+    });
   });
 
   const toggle = document.getElementById("menu-toggle");
   const nav = document.getElementById("main-nav");
+  const container = document.getElementById("menu-container");
 
   function toggleMenu() {
     const isExpanded = toggle?.getAttribute("aria-expanded") === "true";
     toggle?.setAttribute("aria-expanded", (!isExpanded).toString());
     nav?.classList.toggle("is-open");
+    const nextState = !isExpanded;
+
+    if (nextState) {
+      container?.classList.add("pointer-events-auto");
+      container?.classList.remove("md:pointer-events-none");
+    } else {
+      container?.classList.remove("pointer-events-auto");
+      container?.classList.add("md:pointer-events-none");
+    }
+    document.body.style.overflow = nextState ? "hidden" : "";
 
     // 背面のスクロールを禁止
     document.body.style.overflow = isExpanded ? "" : "hidden";

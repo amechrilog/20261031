@@ -6,7 +6,7 @@ import returnImage from "../../assets/return.png";
 <a
   href="#"
   id="return"
-  class="fixed flex flex-col items-center bottom-6 right-6 md:bottom-10 md:right-10 opacity-0 invisible pointer-events-none"
+  class="fixed flex flex-col items-center bottom-6 right-6 md:bottom-10 md:right-10 opacity-0 invisible pointer-events-none translate-y-10"
 >
   <img src={returnImage.src} class="w-20 md:w-max" alt="トップに戻る" />
   <span class="text-xs px-4 rounded-full bg-blue">TOP↑</span>
@@ -25,10 +25,11 @@ import returnImage from "../../assets/return.png";
     if (upBtn && heroSection) {
       gsap.to(upBtn, {
         opacity: 1,
-        y: 5,
+        y: 0,
         visibility: "visible",
         pointerEvents: "auto",
-        duration: 0.3,
+        duration: 0.5,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: heroSection,
           start: "bottom top",
