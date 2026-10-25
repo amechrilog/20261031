@@ -1,0 +1,19 @@
+---
+const { href, title = "タイトル" ,subtitle ="Googleドライブ"} = Astro.props;
+---
+
+<a
+  class="block max-w-max mx-auto my-8 group relative overflow-hidden overflow-x-hidden rounded-full px-10 bg-blue text-white"
+  href={href}
+  target="_blank"
+>
+  <span class="relative flex flex-col items-center py-4 z-10">
+    <span class="block font-bold">{title}</span>
+    <span class="text-xs text-center">{subtitle}</span></span
+  >
+  <span class="absolute inset-0 overflow-hidden rounded-md">
+    <span
+      class="absolute left-0 aspect-square w-full origin-center -translate-x-full rounded-full bg-black transition-all duration-500 group-hover:-translate-x-0 group-hover:scale-150 group-hover:drop-shadow-md"
+    ></span>
+  </span>
+</a>
